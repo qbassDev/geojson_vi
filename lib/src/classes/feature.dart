@@ -11,7 +11,7 @@ class GeoJSONFeature implements GeoJSON {
 
   GeoJSONGeometry _geometry;
   
-  _getGeometryBbox(GeoJSONGeometry geometry){
+  static _getGeometryBbox(GeoJSONGeometry geometry){
     var _bbox = _geometry.bbox;
     if (value.type == GeoJSONType.point && properties != null && properties!.isNotEmpty && properties!.containsKey('radius')) {
       var radius = properties!['radius'];
