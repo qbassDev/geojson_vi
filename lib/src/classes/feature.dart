@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:latlong2/latlong.dart';
 import '../../geojson_vi.dart';
 
 /// The Feature represents a spatially bounded thing.
@@ -18,9 +19,10 @@ class GeoJSONFeature implements GeoJSON {
   set geometry(value) {
     _geometry = value;
     _bbox = _geometry.bbox;
-    if (properties.isNotEmpty && properties.containsKey('radius')) {
+    if (value.type = GeoJSONType.point && properties.isNotEmpty && properties.containsKey('radius')) {
       var radius = properties['radius'];
       Distance dist = const Distance();
+      LatLng point = LatLng(_bbox[1], _bbox[0])
       _bbox = [
         dist.offset(point, radius, 0),
         dist.offset(point, radius, 90),
