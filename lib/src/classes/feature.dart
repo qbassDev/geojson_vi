@@ -16,7 +16,7 @@ class GeoJSONFeature implements GeoJSON {
     if (geometry.type == GeoJSONType.point && properties != null && properties!.isNotEmpty && properties!.containsKey('radius')) {
       var radius = properties!['radius'];
       Distance dist = const Distance();
-      LatLng point = LatLng(_bbox![1], _bbox![0]);
+      LatLng point = LatLng(_bbox![0], _bbox![1]);
       _bbox = [
         dist.offset(point, radius, 0).latitude,
         dist.offset(point, radius, 90).longitude,
