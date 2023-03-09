@@ -10,15 +10,9 @@ class GeoJSONFeature implements GeoJSON {
   GeoJSONType type = GeoJSONType.feature;
 
   GeoJSONGeometry _geometry;
-
-  /// A Feature object has a member with the name [geometry]. The value
-  /// of the geometry member SHALL be either a Geometry object as types:
-  /// Point, MultiPoint, LineString, MultiLineString, Polygon,
-  /// MultiPolygon, or GeometryCollection
-  GeoJSONGeometry get geometry => _geometry;
-  set geometry(value) {
-    _geometry = value;
-    _bbox = _geometry.bbox;
+  
+  _getGeometryBbox(GeoJSONGeometry geometry){
+    var _bbox = _geometry.bbox;
     if (value.type == GeoJSONType.point && properties != null && properties!.isNotEmpty && properties!.containsKey('radius')) {
       var radius = properties!['radius'];
       Distance dist = const Distance();
@@ -30,6 +24,18 @@ class GeoJSONFeature implements GeoJSON {
         dist.offset(point, radius, 270).longitude
       ];
     }
+    
+    return _bbox;
+  }
+
+  /// A Feature object has a member with the name [geometry]. The value
+  /// of the geometry member SHALL be either a Geometry object as types:
+  /// Point, MultiPoint, LineString, MultiLineString, Polygon,
+  /// MultiPolygon, or GeometryCollection
+  GeoJSONGeometry get geometry => _geometry;
+  set geometry(value) {
+    _geometry = value;
+    _bbox = _getGeometryBbox(value);
   }
 
   /// A Feature object has a member with the name [properties]. The
@@ -49,7 +55,7 @@ class GeoJSONFeature implements GeoJSON {
   GeoJSONFeature(GeoJSONGeometry geometry,
       {this.properties, this.id, this.title})
       : _geometry = geometry,
-        _bbox = geometry.bbox;
+        _bbox = _getGeometryBbox(geometry);
 
   /// The constructor from map
   factory GeoJSONFeature.fromMap(Map<String, dynamic> map) {
