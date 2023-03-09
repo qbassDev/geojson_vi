@@ -35,7 +35,7 @@ class GeoJSONFeature implements GeoJSON {
   GeoJSONGeometry get geometry => _geometry;
   set geometry(value) {
     _geometry = value;
-    _bbox = _getGeometryBbox(value);
+    _bbox = _getGeometryBbox(value, properties);
   }
 
   /// A Feature object has a member with the name [properties]. The
