@@ -18,6 +18,16 @@ class GeoJSONFeature implements GeoJSON {
   set geometry(value) {
     _geometry = value;
     _bbox = _geometry.bbox;
+    if (properties.isNotEmpty && properties.containsKey('radius')) {
+      var radius = properties['radius'];
+      Distance dist = const Distance();
+      _bbox = [
+        dist.offset(point, radius, 0),
+        dist.offset(point, radius, 90),
+        dist.offset(point, radius, 180),
+        dist.offset(point, radius, 270)
+      ];
+    }
   }
 
   /// A Feature object has a member with the name [properties]. The
