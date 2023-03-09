@@ -11,9 +11,9 @@ class GeoJSONFeature implements GeoJSON {
 
   GeoJSONGeometry _geometry;
   
-  static _getGeometryBbox(GeoJSONGeometry geometry){
-    var _bbox = _geometry.bbox;
-    if (value.type == GeoJSONType.point && properties != null && properties!.isNotEmpty && properties!.containsKey('radius')) {
+  static _getGeometryBbox(GeoJSONGeometry geometry, var properties){
+    var _bbox = geometry.bbox;
+    if (geometry.type == GeoJSONType.point && properties != null && properties!.isNotEmpty && properties!.containsKey('radius')) {
       var radius = properties!['radius'];
       Distance dist = const Distance();
       LatLng point = LatLng(_bbox![1], _bbox![0]);
@@ -55,7 +55,7 @@ class GeoJSONFeature implements GeoJSON {
   GeoJSONFeature(GeoJSONGeometry geometry,
       {this.properties, this.id, this.title})
       : _geometry = geometry,
-        _bbox = _getGeometryBbox(geometry);
+        _bbox = _getGeometryBbox(geometry, properties);
 
   /// The constructor from map
   factory GeoJSONFeature.fromMap(Map<String, dynamic> map) {
