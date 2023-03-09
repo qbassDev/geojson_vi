@@ -19,7 +19,7 @@ class GeoJSONFeature implements GeoJSON {
   set geometry(value) {
     _geometry = value;
     _bbox = _geometry.bbox;
-    if (value.type == GeoJSONType.point && properties.isNotEmpty && properties.containsKey('radius')) {
+    if (value.type == GeoJSONType.point && properties != null && properties!.isNotEmpty && properties!.containsKey('radius')) {
       var radius = properties['radius'];
       Distance dist = const Distance();
       LatLng point = LatLng(_bbox[1], _bbox[0]);
