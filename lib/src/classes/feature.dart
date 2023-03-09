@@ -24,10 +24,10 @@ class GeoJSONFeature implements GeoJSON {
       Distance dist = const Distance();
       LatLng point = LatLng(_bbox[1], _bbox[0]);
       _bbox = [
-        dist.offset(point, radius, 0),
-        dist.offset(point, radius, 90),
-        dist.offset(point, radius, 180),
-        dist.offset(point, radius, 270)
+        dist.offset(point, radius, 0).latitude,
+        dist.offset(point, radius, 90).longitude,
+        dist.offset(point, radius, 180).latitude,
+        dist.offset(point, radius, 270).longitude
       ];
     }
   }
